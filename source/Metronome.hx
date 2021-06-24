@@ -6,17 +6,14 @@ class Metronome
 	public static var bpm:Int = 120;
 	public static var crochet:Float = ((60 / bpm) * 1000);
 	public static var stepCrochet:Float = crochet / 4;
-	public static var stepCrochetPoly:Float = crochet / 4;
 	public static var songPosition:Float;
 	public static var lastSongPos:Float;
-	public static var safeZone:Float = 0.125;
+	//public static var safeZone:Float = 0.125;
 	
 	public static var curBeat:Int = 0;
 	public static var curBeatPoly:Int = 0;
 	public static var curStep:Int = 0;
-	public static var curStepPoly:Int = 0;
 	public static var oldStep:Int = 0;
-	public static var oldStepPoly:Int = 0;
 	
 	public static var readyCount:Int = 0;
 	public static var polyCount:Int = 0;
@@ -29,24 +26,16 @@ class Metronome
 
 		curStep = Math.floor(songPosition / stepCrochet);
 		curBeat = Math.floor(curStep / 4);
-		curStepPoly = Math.floor(songPosition / stepCrochetPoly);
 		curBeatPoly = Math.floor(curStep / 3);
 		
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
-		if (oldStepPoly != curStepPoly && curStepPoly > 0)
-			stepHitPoly();
-			
 	}
 	public static function stepHit():Void
 	{
 		if (curStep % 4 == 0)
 			beatHit();
-	}
-	
-	public static function stepHitPoly():Void
-	{
-		if (curStepPoly % 3 == 0)
+		if (curStep % 3 == 0)
 			beatHitPoly();
 	}
 	public static function beatHitPoly():Void
