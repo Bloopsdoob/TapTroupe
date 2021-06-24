@@ -22,8 +22,6 @@ class Metronome
 	public static function metronomeUpdate():Void
 	{
 		oldStep = curStep;
-		oldStepPoly = curStepPoly;
-
 		curStep = Math.floor(songPosition / stepCrochet);
 		curBeat = Math.floor(curStep / 4);
 		curBeatPoly = Math.floor(curStep / 3);
