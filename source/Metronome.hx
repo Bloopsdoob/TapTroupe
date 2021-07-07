@@ -8,10 +8,9 @@ class Metronome
 	public static var stepCrochet:Float = crochet / 4;
 	public static var songPosition:Float;
 	public static var lastSongPos:Float;
-	//public static var safeZone:Float = 0.125;
+	public static var safeZone:Float = 0.125;
 	
 	public static var curBeat:Int = 0;
-	public static var curBeatPoly:Int = 0;
 	public static var curStep:Int = 0;
 	public static var oldStep:Int = 0;
 	
@@ -22,7 +21,7 @@ class Metronome
 	public static var onOffBeat:Bool = false;
 	public static var polyOffset:Int = 0;
 	public static var polyTapOffset:Int = 0;
-		
+	
 	public static function metronomeUpdate():Void
 	{
 		oldStep = curStep;
@@ -108,10 +107,13 @@ class Metronome
 	}
 	public static function beatHit():Void
 	{
-		if (readyCount > 0)
-			polyUpdate();
-		else if (readyCount == 4)
-			readyCount = 0;
+		switch (readyCount)
+		{
+			case 1|2:
+				polyUpdate();
+			case 4:
+				readyCount = 0;
+		}
 		
 		if ((polyCount == 1) && (curBeat % 4 == 0))
 		{
@@ -131,7 +133,7 @@ class Metronome
 		{
 			FlxG.sound.play(AssetPaths.tapEnd__ogg, 1, false);
 		}
-		if ((curBeat > 4) && !(readyCount > 1))
+		if ((curBeat > 4) && !(readyCount > 2))
 		{
 			for (i in 0...3)
 			{
